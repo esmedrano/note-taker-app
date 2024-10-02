@@ -2,7 +2,8 @@
 
 pygame is just so easy to use... right?
 
-My main concern is that the code may become too slow to use.
+My main concern is that the code may become too slow to use. 
+See overclock() in notes.py
 
 Otherwise I'd like to improve upon Obsidian:
 - lock nodes into place
