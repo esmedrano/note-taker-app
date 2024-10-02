@@ -1,4 +1,5 @@
-import pygame as pg 
+import pygame as pg
+import random as rand
 pg.init()
 
 bg_color = (150, 150, 150)
