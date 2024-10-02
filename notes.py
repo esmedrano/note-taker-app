@@ -9,6 +9,26 @@ window_y = 500
 window = pg.display.set_mode((window_x, window_y), pg.RESIZABLE)
 
 
+# Proof of concept
+def overclock():
+	circle_radius = 5 
+	circles = []
+	x_pos = [*range(10, window_x, 10)]
+	y_pos = [*range(10, window_y, 10)]
+	for y in y_pos:
+		for x in x_pos:
+			circle_rect = pg.Rect(x - circle_radius, y - circle_radius, circle_radius * 2, circle_radius * 2)
+			circles.append(circle_rect)
+
+	i = 0
+	for circle_rect in circles:
+		circle_rect.x = rand.randrange(0, window_x - circle_radius * 2)
+		circle_rect.y = rand.randrange(0, window_y - circle_radius * 2)
+		pg.draw.circle(window, (0, 0, 0), circle_rect.center, circle_radius)
+		pg.draw.line(window, (0, 0, 0), (circles[i][0], circles[i][1]), (circles[i - 1][0], circles[i - 1][1]))
+		i += 1
+
+
 # Holder for UI state variables  
 def get_ui_state():
 	on_graph = true
@@ -85,5 +105,8 @@ while 1:
 	# Draw UI header bar
 	ui_header()   
 
+	# Proof of concept
+	overclock()
+	
 	pg.display.update()
 
