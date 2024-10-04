@@ -1,4 +1,4 @@
-# Libraries
+# Dependencies
 import pygame as pg
 import pygame_gui as pgg
 import os
@@ -20,8 +20,8 @@ pg_c = getattr(pg, 'K_SPACE')
 def overclock():
 	circle_radius = 5 
 	circles = []
-	x_pos = [*range(10, window_x, 10)]
-	y_pos = [*range(10, window_y, 10)]
+	x_pos = [*range(10, init.window_x, 10)]
+	y_pos = [*range(10, init.window_y, 10)]
 	for y in y_pos:
 		for x in x_pos:
 			circle_rect = pg.Rect(x - circle_radius, y - circle_radius, circle_radius * 2, circle_radius * 2)
@@ -29,16 +29,20 @@ def overclock():
 
 	i = 0
 	for circle_rect in circles:
-		circle_rect.x = rand.randrange(0, window_x - circle_radius * 2)
-		circle_rect.y = rand.randrange(0, window_y - circle_radius * 2)
-		pg.draw.circle(window, (0, 0, 0), circle_rect.center, circle_radius)
-		pg.draw.line(window, (0, 0, 0), (circles[i][0], circles[i][1]), (circles[i - 1][0], circles[i - 1][1]))
+		circle_rect.x = rand.randrange(0, init.window_x - circle_radius * 2)
+		circle_rect.y = rand.randrange(0, init.window_y - circle_radius * 2)
+		pg.draw.circle(init.window, (0, 0, 0), circle_rect.center, circle_radius)
+		pg.draw.line(init.window, (0, 0, 0), (circles[i][0], circles[i][1]), (circles[i - 1][0], circles[i - 1][1]))
 		i += 1
 
 
 def main():
 	# UI class from user_interface.py
 	ui = user_interface.Elements()
+
+	space_bar_pressed = False
+	space_count = 0
+	is_overclocking = False
 
 	is_running = True
 	while is_running:
@@ -55,7 +59,15 @@ def main():
 				init.update_screen_size(event.w, event.h)
 			
 			if event.type == pg.KEYDOWN:
-				keys = pg.key.get_pressed()
+				keys = pg.key.get_pressed()	
+
+				if keys[pg.K_SPACE]:
+					space_count += 1
+					if space_count % 2 != 0:
+						is_overclocking = True
+					else:
+						is_overclocking = False
+
 
 				for shortcut in shortcuts:
 					for key_combo in shortcut: 
@@ -80,6 +92,9 @@ def main():
 		init.manager.update(init.time_delta)
 		# Draw UI elements 
 		init.manager.draw_ui(init.window)
+
+		if is_overclocking:
+			overclock()
 
 		# Update the screen
 		pg.display.update()
