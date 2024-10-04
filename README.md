@@ -1,9 +1,9 @@
 # note-taker-app
 
 To use:
-1. Download file 
-2. Install dependencies
-3. run main.py
+1. Download and unzip file 
+2. Open comand line and install dependencies- all the ones you need are imported at the top of main.py
+4. run main.py
 
 pygame is just so easy to use... right?
 
@@ -15,5 +15,5 @@ Otherwise I'd like to improve upon Obsidian:
 - box select nodes
 - auto generate nodes for a topic with AI
 - auto generate nodes for YouTube video highlights and other media
-- allow multiple connection schemes for a set of nodesand switch between them
+- allow multiple connection schemes for a set of nodes and switch between them
 - ...
