@@ -7,17 +7,6 @@ class Node:
 		self.node_color = (0, 0, 255) 
 		self.nodes = []
 
-
-	def save_node_to_folder(self, node_file_name):
-		# Set folder name
-		folder = "node_markdown_files"
-	    # Create folder
-		os.makedirs(folder, exist_ok=True)
-		# Add node to folder
-		file_path = os.path.join(folder, node_file_name)
-		shutil.move(node_file_name, file_path)
-
-
 	def create_node(self):
 		# Define the default file name
 		file_name_holder = "title.md"
