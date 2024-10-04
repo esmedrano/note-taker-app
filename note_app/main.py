@@ -9,36 +9,23 @@ import random as rand
 import init
 import user_interface
 import graph
-import node
+import note_app_nodes
+import keyboard_shortcuts
+import overclock
+import test
 
 pg.init()
 
 bg_color = (150, 150, 150) 
-pg_c = getattr(pg, 'K_SPACE')
-
-# Proof of concept
-def overclock():
-	circle_radius = 5 
-	circles = []
-	x_pos = [*range(10, init.window_x, 10)]
-	y_pos = [*range(10, init.window_y, 10)]
-	for y in y_pos:
-		for x in x_pos:
-			circle_rect = pg.Rect(x - circle_radius, y - circle_radius, circle_radius * 2, circle_radius * 2)
-			circles.append(circle_rect)
-
-	i = 0
-	for circle_rect in circles:
-		circle_rect.x = rand.randrange(0, init.window_x - circle_radius * 2)
-		circle_rect.y = rand.randrange(0, init.window_y - circle_radius * 2)
-		pg.draw.circle(init.window, (0, 0, 0), circle_rect.center, circle_radius)
-		pg.draw.line(init.window, (0, 0, 0), (circles[i][0], circles[i][1]), (circles[i - 1][0], circles[i - 1][1]))
-		i += 1
 
 
 def main():
+	### CODE FROM OTHER FILES ###
 	# UI class from user_interface.py
 	ui = user_interface.Elements()
+	shortcuts = keyboard_shortcuts.get_shortcuts()
+	node = note_app_nodes.Node()
+	### CODE FROM OTHER FILES ###
 
 	space_bar_pressed = False
 	space_count = 0
@@ -58,6 +45,7 @@ def main():
 			if event.type == pg.VIDEORESIZE:
 				init.update_screen_size(event.w, event.h)
 			
+			# Key press events
 			if event.type == pg.KEYDOWN:
 				keys = pg.key.get_pressed()	
 
@@ -68,11 +56,12 @@ def main():
 					else:
 						is_overclocking = False
 
-
+				# Check for keyboard shortcut key strokes 
 				for shortcut in shortcuts:
 					for key_combo in shortcut: 
 						if all(keys[getattr(pg, key)] for key in key_combo):
-							print('combo')
+							node.create_node()
+							print(node.nodes)
 
 			# Button logic
 			# if event.type == pgg.UI_BUTTON_PRESSED:
@@ -82,6 +71,7 @@ def main():
 			# UI events
 			init.manager.process_events(event)
 
+		# Set background colors
 		init.window.fill(bg_color)
 
 		# Build non pygame_gui elements 
@@ -93,17 +83,12 @@ def main():
 		# Draw UI elements 
 		init.manager.draw_ui(init.window)
 
+		# Function toggle section 
 		if is_overclocking:
-			overclock()
+			overclock.overclock()
 
 		# Update the screen
 		pg.display.update()
-
-		with open('keyboard_shortcuts.json', 'r') as file:
-			data = json.load(file)
-
-		create_new_node = data.get("create new node")
-		shortcuts = [create_new_node]
 		
 		
 if __name__ == "__main__":

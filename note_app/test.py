@@ -1,41 +1,34 @@
-import pygame as pg
-import pygame_gui as pgg
+import os
+nodes = []
+def create_node():
+    # Define the default file name
+    file_name_holder = "title.md"
 
-pg.init()
-
-window_x = 500
-window_y = 500
-window = pg.display.set_mode((window_x, window_y), pg.RESIZABLE)
-
-manager = pgg.UIManager((window_x, window_y))
-
-# Create the initial UIPanel
-sidebar = pgg.elements.UIPanel(
-    relative_rect=pg.Rect(0, 35, 100, window_y - 35),  # Setting initial height
-    manager=manager
-)
-
-clock = pg.time.Clock()
-initial_window_y = window_y
-
-# Main loop
-running = True
-while running:
-    time_delta = clock.tick(60) / 1000.0
+    # Define the node.md folder
+    folder = "node_markdown_files"
     
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            running = False
-        if event.type == pg.VIDEORESIZE:
-            window_x, window_y = event.w, event.h
-            
-            # Resize the UIPanel
-            sidebar.set_dimensions((100, window_y - 35))
-            sidebar.rebuild()
-
-    manager.update(time_delta)
+    # Create the node.md folder
+    os.makedirs(folder, exist_ok=True)
     
-    # Clear the window and draw everything
-    window.fill((0, 0, 0))
-    manager.draw_ui(window)
-    pg.display.update()
+    # Set initial file name and construct the full path
+    file_name = file_name_holder
+    file_path = os.path.join(folder, file_name)
+    
+    # Check if the file exists in the folder, and if it does, rename it with an index
+    index = 1
+    while os.path.exists(file_path):
+        # Rename the file if the previous value for file_name exists
+        file_name = f"{file_name_holder[:-3]}{index}.md"  # Remove ".md" and append index
+        
+        # Redefine the path if the previous value for file_path exists
+        file_path = os.path.join(folder, file_name)
+        
+        # Index for the copied file name 
+        index += 1
+    
+    # Create and write to the file in the specified folder
+    with open(file_path, 'w', encoding='utf-8') as file:
+        file.write("test")
+    
+    # Append the new file path to nodes 
+    nodes.append(file_name)
