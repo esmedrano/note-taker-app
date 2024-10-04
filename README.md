@@ -3,8 +3,9 @@
 To use:
 1. Download and unzip file 
 2. Open comand line and install dependencies- all the ones you need are imported at the top of main.py
-4. run main.py
-5. press space to toggle overclock()
+4. right click main.py and open in command line 
+5. enter command: python main.py
+6. press space to toggle overclock()
 
 pygame is just so easy to use... right?
 
