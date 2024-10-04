@@ -2,10 +2,9 @@
 
 To use:
 1. Download and unzip file
-2. Right click file the "note_app" and select open in terminal
+2. Right click file "note_app" and select open in terminal
 3. Install dependencies with command: pip install -r requiremnents.txt
-4. Right click main.py and select open in terminal
-5. Run with command: python main.py
+4. Run with command: python main.py
 
 Press space to toggle overclock()
 Press ctrl + n to test keyboard shortcut 
