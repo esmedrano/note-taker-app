@@ -1,7 +1,7 @@
 # note-taker-app
 
 To use:
-1. Download files
+1. Download file 
 2. Install dependencies
 3. run main.py
 
