@@ -1,5 +1,10 @@
 # note-taker-app
 
+To use:
+1. Download files
+2. Install dependencies
+3. run main.py
+
 pygame is just so easy to use... right?
 
 My main concern is that the code may become too slow to use. 
