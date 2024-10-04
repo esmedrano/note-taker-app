@@ -1,11 +1,14 @@
 # note-taker-app
 
 To use:
-1. Download and unzip file 
-2. Open comand line and install dependencies- all the ones you need are imported at the top of main.py
-4. right click main.py and open in terminal
-5. enter command: python main.py
-6. press space to toggle overclock()
+1. Download and unzip file
+2. Right click file the "note_app" and select open in terminal
+3. Install dependencies with command: pip install -r requiremnents.txt
+4. Right click main.py and select open in terminal
+5. Run with command: python main.py
+
+Press space to toggle overclock()
+Press ctrl + n to test keyboard shortcut 
 
 pygame is just so easy to use... right?
 
