@@ -2,11 +2,10 @@
 
 import pygame as pg
 import pygame_gui as pgg
-import thorpy as tp
+
 
 import init
 
-tp.init(init.window, tp.theme_classic)
 
 
 class Elements:
@@ -48,7 +47,7 @@ class Elements:
 		# sidebar background  
 		pg.draw.rect(init.window, self.sidebar_color, self.sidebar_rect)
 
-		tp.Box
+		
 	
 
 	def populate_sidebar(self, node_titles):
