@@ -1,7 +1,21 @@
 {
-	"create new node": 
+	"shortcuts":
 	[
-		["K_RCTRL", "K_n"], 
-		["K_LCTRL", "K_n"]
+	
+		[
+			"create new node",
+			["K_RCTRL", "K_n"], 
+			["K_LCTRL", "K_n"]
+		], 
+		[
+			"shortcut two", 
+			["K_RCTRL", "K_a"], 
+			["K_LCTRL", "K_a"]
+		],
+		[
+			"shortcut three", 
+			["K_RCTRL", "K_z"], 
+			["K_LCTRL", "K_z"]
+		]
 	]
 }

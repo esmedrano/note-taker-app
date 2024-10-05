@@ -10,7 +10,7 @@ import init
 import user_interface
 import graph
 import note_app_nodes
-import keyboard_shortcuts
+import shortcut_functionality
 import overclock
 import test
 
@@ -23,10 +23,11 @@ def main():
 	### CODE FROM OTHER FILES ###
 	# UI class from user_interface.py
 	ui = user_interface.Elements()
-	shortcuts = keyboard_shortcuts.get_shortcuts()
 	node = note_app_nodes.Node()
 	### CODE FROM OTHER FILES ###
 
+	shortcuts_list = shortcut_functionality.get_shortcuts()
+	
 	space_bar_pressed = False
 	space_count = 0
 	is_overclocking = False
@@ -57,11 +58,24 @@ def main():
 						is_overclocking = False
 
 				# Check for keyboard shortcut key strokes 
-				for shortcut in shortcuts:
-					for key_combo in shortcut: 
-						if all(keys[getattr(pg, key)] for key in key_combo):
-							node.create_node()
-							print(node.nodes)
+				# shortcuts_list = [ [[][][]], [["shortcut name"], [l_ctrl + n], [r_ctrl + n]], ...  ]
+				# If I put this into a function in another file I'll have to import all the functions that the shortcuts call into that same file 
+				for shortcut in shortcuts_list:
+					if shortcut[0] == "create new node":  
+						for key_combo in shortcut[1:]:
+							if all(keys[getattr(pg, key)] for key in key_combo):
+								node.create_node()
+								ui.populate_sidebar(node.node_titles)
+					
+					if shortcut[0] == "shortcut two":
+						for key_combo in shortcut[1:]:
+							if all(keys[getattr(pg, key)] for key in key_combo):
+								print("a")
+
+					if shortcut[0] == "shortcut three":		 
+						for key_combo in shortcut[1:]:							
+							if all(keys[getattr(pg, key)] for key in key_combo):
+								print("z")
 
 			# Button logic
 			# if event.type == pgg.UI_BUTTON_PRESSED:
@@ -75,8 +89,8 @@ def main():
 		init.window.fill(bg_color)
 
 		# Build non pygame_gui elements 
-		ui.header()   
-		ui.sidebar()  # This can't be built anywhere else (event for loop, outside of while loop) for reasons that are beyond me  
+		ui.draw_header()   
+		ui.draw_sidebar()  # This can't be built anywhere else (event for loop, outside of while loop) for reasons that are beyond me  
 		
 		# Some UI elements require a timer
 		init.manager.update(init.time_delta)

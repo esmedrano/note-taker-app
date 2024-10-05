@@ -5,7 +5,8 @@ import shutil
 class Node:
 	def __init__(self):
 		self.node_color = (0, 0, 255) 
-		self.nodes = []
+		self.node_titles = []
+
 
 	def create_node(self):
 		# Define the default file name
@@ -38,7 +39,7 @@ class Node:
 		    file.write("test")
 
 		# Append the new file path to nodes 
-		self.nodes.append(file_name)
+		self.node_titles.append(file_name)
 
 
 ###############################################################################################

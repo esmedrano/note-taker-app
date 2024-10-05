@@ -2,26 +2,35 @@
 
 import pygame as pg
 import pygame_gui as pgg
+import thorpy as tp
+
 import init
+
+tp.init(init.window, tp.theme_classic)
 
 
 class Elements:
 	def __init__(self):
 		self.manager = init.manager
-		self.header_bg = (100, 100, 100)
-		self.initial_window_y = init.window_y
+		self.header_color = (100, 100, 100)
+		self.sidebar_color = (100, 100, 100)
+
+		# pygame shapes as ui elements 
+		self.header_rect = pg.Rect(0, 0, init.window_x, 35)
+		self.sidebar_rect = pg.Rect(0, self.header_rect[3], 100, init.window_y)
 
 		# pygame_gui elements
 		self.pygame_gui_sidebar = None
+		self.initial_window_y = init.window_y  # For testing pygame_gui bugs at bottom of file
 
 
 	# Header for displaying tabs 
-	def header(self):
-		# Build header rect here bc __init__ doesn't catch window_x resize
-		header_rect = pg.Rect(0, 0, init.window_x, 35)
+	def draw_header(self):
+		# Rebuild header rect here bc __init__ doesn't catch window_x resize
+		self.header_rect = pg.Rect(0, 0, init.window_x, 35)
 
 		# header bar background  
-		pg.draw.rect(init.window, self.header_bg, header_rect)
+		pg.draw.rect(init.window, self.header_color, self.header_rect)
 
 		# Font 
 		font = pg.font.Font(None, 24)
@@ -32,13 +41,19 @@ class Elements:
 		init.window.blit(file_text, (10, 10, 10, 10))
 
 
-	def sidebar(self):
-		# Build header rect here bc __init__ doesn't catch window_x resize
-		header_rect = pg.Rect(0, 0, init.window_x, 35)
+	def draw_sidebar(self):
+		# Rebuild header rect here bc __init__ doesn't catch window_x resize
+		self.sidebar_rect = pg.Rect(0, self.header_rect[3], 100, init.window_y)
 
 		# sidebar background  
-		pg.draw.rect(init.window, self.header_bg, (0, header_rect[3], 100, init.window_y))
-		
+		pg.draw.rect(init.window, self.sidebar_color, self.sidebar_rect)
+
+		tp.Box
+	
+
+	def populate_sidebar(self, node_titles):
+		print(node_titles)
+
 
 	# Tab functionality
 	def tab(self):
