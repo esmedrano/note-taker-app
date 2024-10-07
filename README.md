@@ -12,9 +12,9 @@ Press ctrl + n to test keyboard shortcut
 pygame is just so easy to use... right?
 
 My main concern is that the code may become too slow to use. 
-See overclock() in notes.py
+I'm not so worried anymore because I optimized when the screen redraws take place. Now it only redraws when something changes. It would be cool to figure out how to only redraw the changes.
 
-Otherwise I'd like to improve upon Obsidian:
+I'd like to improve upon Obsidian:
 - lock nodes into place
 - box select nodes
 - auto generate nodes for a topic with AI
