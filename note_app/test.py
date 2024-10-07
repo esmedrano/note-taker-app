@@ -1,34 +1,39 @@
-import os
-nodes = []
-def create_node():
-    # Define the default file name
-    file_name_holder = "title.md"
+import pygame as pg
+import sys
 
-    # Define the node.md folder
-    folder = "node_markdown_files"
+# Initialize Pygame
+pg.init()
+
+# Set up the display
+width, height = 800, 600
+window = pg.display.set_mode((width, height))
+pg.display.set_caption("Space Bar Print Example")
+
+bgc = (100, 100, 100)
+
+# Main loop
+running = True
+while running:
+    # Draw everything that the user needs to use app
+    window.fill(bgc)
+    pg.draw.circle(window, (255, 0, 0), (100, 100), 50)
+    pg.display.update()
     
-    # Create the node.md folder
-    os.makedirs(folder, exist_ok=True)
-    
-    # Set initial file name and construct the full path
-    file_name = file_name_holder
-    file_path = os.path.join(folder, file_name)
-    
-    # Check if the file exists in the folder, and if it does, rename it with an index
-    index = 1
-    while os.path.exists(file_path):
-        # Rename the file if the previous value for file_name exists
-        file_name = f"{file_name_holder[:-3]}{index}.md"  # Remove ".md" and append index
-        
-        # Redefine the path if the previous value for file_path exists
-        file_path = os.path.join(folder, file_name)
-        
-        # Index for the copied file name 
-        index += 1
-    
-    # Create and write to the file in the specified folder
-    with open(file_path, 'w', encoding='utf-8') as file:
-        file.write("test")
-    
-    # Append the new file path to nodes 
-    nodes.append(file_name)
+    # Parse user input
+    parsing = True
+    while parsing:
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                running = False
+                parsing = False
+
+            # Check for key down events
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_SPACE:  # Check if space bar is pressed
+                    print("Exit inner loop to update screen!")
+                    
+                    parsing = False
+
+# Clean up and close Pygame
+pg.quit()
+sys.exit()
