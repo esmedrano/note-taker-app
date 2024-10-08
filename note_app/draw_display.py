@@ -1,31 +1,36 @@
 import pygame as pg
 import config
-import overclock
+import user_interface
+import overclock 
 
 
 class Draw:
-    def __init__(self):
-        self.is_overclocking = False
-        self.screen_redraws = -1
-        self.radius = 10
+	def __init__(self):
+		self.ui = user_interface.Elements()
+		self.is_overclocking = False
+		self.radius = 10
+		self.display_redraws = 0
 
 
-    # Draw the basic UI 
-    def draw(self, ui):
-        global screen_redraws 
-        # Set background colors
-        config.window.fill(config.bg_color)
+	def draw_app(self):
+		# Set background colors
+		config.window.fill(config.background_c)
 
-        # Build non pygame_gui elements 
-        ui.draw_header()
-        ui.draw_sidebar()
-        ui.draw_sidebar_buttons()   
+		# Build non pygame_gui elements 
+		self.ui.draw_header()
+		self.ui.draw_sidebar()
+		self.ui.draw_sidebar_buttons()   
 
-        pg.draw.circle(config.window, (0, 0, 255), (300, 200), self.radius)
+		pg.draw.circle(config.window, (0, 0, 255), (300, 200), self.radius)
 
-        if self.is_overclocking:
-            overclock.overclock()
+		if self.is_overclocking:
+			overclock.overclock()
 
-        pg.display.update()
-        self.screen_redraws += 1
-        print("Screen redraws: ", self.screen_redraws)
+		pg.display.update()
+		self.display_redraws += 1
+		print("Screen redraws: ", self.display_redraws)
+
+		# Used to check if nodes folder has been deleted
+		node_folder_exists = False
+
+		drawn = True

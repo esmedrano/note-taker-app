@@ -11,7 +11,7 @@ class Node:
 
 	def create_node(self):
 		# Define the default file name
-		file_name_holder = "title.md"
+		file_name_holder = config.node_title
 
 		# Create the node.md folder
 		os.makedirs(self.folder, exist_ok=True)
