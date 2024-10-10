@@ -29,23 +29,23 @@ def main():
 	
 	space_bar_pressed = False
 	space_count = 0
-	node_folder_exists = False
 
-	redrawn = False
+	# If else gate variables 
+	node_folder_exists = False
 
 	drawn = False
 	is_running = True
 	while is_running:
+		# IMPORTANT: This keeps the code from straining the cpu 
+		clock.tick(60)
+
 		# Only redraw the screen when nessecary 
 		if not drawn:
 			draw.draw_app()
 			drawn = True
 
-		# IMPORTANT: This keeps the code from straining the cpu 
-		time = clock.tick(60)
-
 		# Get mouse cursor position 
-		mouse_cursor_pos = pg.mouse.get_pos()
+		mouse_pos = pg.mouse.get_pos()
 
 		# Parse node files for deletions 
 		folder = config.node_md_folder
@@ -61,47 +61,28 @@ def main():
 			for title in ui.node_file_names:
 				# Redraw the screen if the file_names needs to be updated 
 				if title not in file_names:
-					# Redraw screen with if not drawn if statement
-					drawn = False
+					# Redraw sidebar files
+					ui.draw_sidebar()
+					ui.draw_sidebar_buttons()
+					pg.display.update()
 
 		# If the node folder doesn't exist but it used to then redraw the screen with no files
 		else:
 			# This is true if the node folder used to exist in the above if statement 
 			if node_folder_exists == True:
 				# Redraw screen with if not drawn if statement
-				drawn = False
+				ui.draw_sidebar()
+				ui.draw_sidebar_buttons()
+				pg.display.update()
 				# Set to false to keep this parse exit closed 
 				node_folder_exists = False
 
-		# If this is true the screen will need to be redrawn every iteration of the inner loop. Observe CPU usage 
+		# If this is true the screen will need to be redrawn every iteration of the while loop Observe CPU usage 
 		if draw.is_overclocking:
 			# Redraw screen with if not drawn if statement
 			drawn = False
 
-		# Check if buttons are pressed
-		# io.get_pressed_buttons()
-		collide = False
-		for file_button in ui.file_button_rects:
-					
-			file_button_rect = file_button[1]
-	
-			if file_button_rect.collidepoint(mouse_cursor_pos):
-				file_button[2] = 1
-				collide = True
-				redrawn = False
-			else:
-				file_button[2] = 0
-
-		# Collide will only be true for this iteration unless the button stays hovered 
-		if collide:
-			draw.draw_app()
-			pg.display.update()
-
-		# Redraw one last time to take off button highlight 
-		if not collide and not redrawn:
-			draw.draw_app()
-			pg.display.update()
-			redrawn = True
+		ui.shade_hovered_buttons(ui.draw_sidebar_buttons, mouse_pos, ui.file_button_rects, ui.file_button_hover_states)
 
 
 ################################################################ EVENT HANDLING ################################################################
@@ -110,8 +91,10 @@ def main():
 				is_running = False
 				# Redraw screen with if not drawn if statement
 				drawn = False
-				print("\n# of total redraws: ", draw.display_redraws, "\n# of sidebar file redraws: ", ui.sidebar_redraws)
-				
+				print("\n# of full window redraws: ", draw.display_redraws)
+				print("\n# of sidebar redraws: ", ui.sidebar_redraws)
+				print("\n# of popup redraws: ", ui.popup_redraws)
+				print("\n")
 			
 			# Update the window dimension variables when window is resized
 			if event.type == pg.VIDEORESIZE:
@@ -123,16 +106,28 @@ def main():
 
 			# Mouse button events
 			if event.type == pg.MOUSEBUTTONUP:
-				# Check for file_button hovering and clicks
-				for file_button in ui.file_button_rects:
+				# If in the sidebar rect
+				if ui.sidebar_rect.collidepoint(mouse_pos):
+					print("\nClick detected inside sidebar!")
+					# Check for file_button clicks by iterating the button hover state list 
+					# It is crucial that the popup loop is called upon releaseing the mouse button 
+					# Pressing the mouse button while in the popup loop exits the loop and allows the release event to trigger a new popup loop 
 					
-					file_button_rect = file_button[1]
-					file_button_hovered = file_button[2]
+					# Create a copy of the hover states because deletion from dictionaries being iterated is not allowed
+					for button, state in ui.file_button_hover_states.copy().items():
+						if state:
+							# If a button is right clicked open the popup
+							if event.button == 3:
+								print("\nFile right clicked: ", button)
+								popup_type = "file button"
+								ui.popup_loop(clock, popup_type, mouse_pos, draw, ui, button)
 
-					if file_button_rect.collidepoint(mouse_cursor_pos):
-						file_button_hovered = 1
-						#draw.draw_app()
-
+				# If in the workspace rect 
+				if ui.workspace_rect.collidepoint(mouse_pos):
+					print("\nClick detected inside workspace!")
+					if event.button == 3:
+						popup_type = "empty workspace"
+						ui.popup_loop(clock, popup_type, mouse_pos, draw, ui, None) 
 
 			# Key press events
 			if event.type == pg.KEYDOWN:

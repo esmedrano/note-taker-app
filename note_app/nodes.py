@@ -41,6 +41,11 @@ class Node:
 		pass
 
 
+	def delete_node(self, node_name):
+		path = os.path.join(config.node_md_folder, node_name)
+		os.remove(path)
+
+
 ###############################################################################################
 
 

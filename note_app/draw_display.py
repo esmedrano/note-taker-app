@@ -13,12 +13,10 @@ class Draw:
 
 
 	def draw_app(self):
-		# Set background colors
-		config.window.fill(config.background_c)
-
-		# Build non pygame_gui elements 
+		# Draw app 
 		self.ui.draw_header()
 		self.ui.draw_sidebar()
+		self.ui.draw_workspace()
 		self.ui.draw_sidebar_buttons()   
 
 		pg.draw.circle(config.window, (0, 0, 255), (300, 200), self.radius)
@@ -28,9 +26,4 @@ class Draw:
 
 		pg.display.update()
 		self.display_redraws += 1
-		print("Screen redraws: ", self.display_redraws)
-
-		# Used to check if nodes folder has been deleted
-		node_folder_exists = False
-
-		drawn = True
+		print("\nScreen redraws: ", self.display_redraws)
