@@ -6,10 +6,10 @@ To use:
 3. Install dependencies with command: pip install -r requiremnents.txt
 4. Run with command: python main.py
 
-space: toggle overclock()
-ctrl+n: to test keyboard shortcut 
-right click: trigger popup over workspace or file name
-file deletion: use popup to delete files 
+1. space: toggle overclock()
+2. ctrl+n: to test keyboard shortcut
+3. right click: trigger popup over workspace or file name
+4. file deletion: use popup to delete files 
 
 pygame is just so easy to use... right?
 
