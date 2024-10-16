@@ -6,6 +6,11 @@
 			"create new node",
 			["K_RCTRL", "K_n"], 
 			["K_LCTRL", "K_n"]
+		],
+		[
+			"save node", 
+			["K_RCTRL", "K_s"], 
+			["K_LCTRL", "K_s"]
 		], 
 		[
 			"shortcut two", 
